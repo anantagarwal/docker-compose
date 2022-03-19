@@ -7,3 +7,9 @@ List of various docker-compose files that can be used for development
 - OPA (Open Policy Agent)
 - MySQL
 - Vault
+
+Navigate to specific docker-compose folder and run the command
+
+```
+docker-compose up
+```
