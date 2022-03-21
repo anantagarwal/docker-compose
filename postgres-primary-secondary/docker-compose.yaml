@@ -1,0 +1,40 @@
+version: "3"
+services:
+  pg_primary:
+    build: ./primary
+    ports:
+      - "5445:5432"
+    volumes:
+      - p_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=pgpassword
+      - POSTGRES_DB=playground
+      - PG_REP_USER=rep
+      - PG_REP_PASSWORD=123456
+    networks:
+     - bridge-docker
+  pg_secondary:
+    build: ./secondary
+    ports:
+      - "5446:5432"
+    depends_on:
+      - pg_primary
+    volumes:
+      - s_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=pgpassword
+      - POSTGRES_DB=playground
+      - PG_REP_USER=rep
+      - PG_REP_PASSWORD=123456
+      - PG_PRIMARY_HOST=pg_primary
+    networks:
+      - bridge-docker
+volumes:
+  p_data:
+  s_data:
+networks:
+  bridge-docker:
+    external:
+      name: bridge-docker
