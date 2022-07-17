@@ -1,0 +1,42 @@
+_format_version: "2.1"
+
+_transform: true
+
+services:
+  - name: weather-services
+    url: https://reqres.in/
+    routes:
+      - name: names-routes
+        paths:
+          - /weather
+        strip_path: true
+  - name: qr
+    url: https://api.qrserver.com
+    routes:
+      - name: qr-routes
+        paths:
+          - /qr-code
+        strip_path: true
+  - name: mock
+    url: https://mockbin.org
+    routes:
+      - name: mocking
+        paths:
+          - /mock
+        strip_path: true
+
+consumers:
+  - custom_id: my-sas-client-1
+    username: anant
+
+plugins:
+  - name: rate-limiting
+    service: mock
+    config:
+      minute: 2
+      policy: local
+      hide_client_headers: true
+  - name: rate-limiting
+    config:
+      minute: 3
+      policy: local
