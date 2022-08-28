@@ -10,6 +10,8 @@ List of various docker-compose files that can be used for development
 - MySQL
 - Vault
 - Kong
+- Wiremock
+- Cassandra
 
 Navigate to specific docker-compose folder and run the command
 

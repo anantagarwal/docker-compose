@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  miremock-svc:
+    container_name: wiremock-svc
+    image: "wiremock/wiremock:2.33.2-alpine"
+    command:
+      - "--verbose"
+      - "--disable-banner"
+    volumes:
+      - $PWD/mappings:/home/wiremock/mappings
+      - $PWD/__files:/home/wiremock/__files
+    ports:
+      - "9000:8080"
