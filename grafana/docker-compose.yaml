@@ -1,0 +1,27 @@
+version: "3"
+services:
+  myapp:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PROMETHEUS_ENABLED=true
+    command: ["./myapp"]
+    depends_on:
+      - prometheus
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+      - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      - prometheus
